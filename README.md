@@ -10,3 +10,4 @@ I created this app to make it easier for you to manage your tasks.
 Framework used : Flutter 
 Language : Dart 
 Extra Assets : Alarm.mp3 
+
