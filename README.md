@@ -7,6 +7,6 @@ I created this app to make it easier for you to manage your tasks.
 
 ## Project Details
 
-Framework used : Flutter
-Language : Dart
-Extra Assets : Alarm.mp3
+Framework used : Flutter /n
+Language : Dart /n
+Extra Assets : Alarm.mp3 /n
