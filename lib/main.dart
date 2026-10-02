@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 const Color keycolor = Color.fromRGBO(238, 239, 32,1);
 const Color sidecolor = Color.fromRGBO(191, 210, 0, 1);
@@ -18,6 +19,7 @@ List<(String, String,IconData,bool,DateTime?)> tasks = [];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Alarm.init(); 
+  await Permission.notification.request();
   runApp(const MyApp());
 }
 
@@ -153,7 +155,7 @@ void _showAddTaskDialog(BuildContext context) {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 22),
             const Text('Time And Date :'),
           TextButton.icon(
             style: ElevatedButton.styleFrom(
