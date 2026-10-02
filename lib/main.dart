@@ -99,19 +99,23 @@ void deletItems() {
   }
 }
 
-Future<void> setAlarm(DateTime dateTime) async {
+Future<void> setAlarm(DateTime dateTime,String ntitle , String nbody) async {
   final alarmSettings = AlarmSettings(
     id: tasks.length,
     dateTime: dateTime,
     assetAudioPath: 'assets/audios/Alarm.mp3', // add your own sound file
     loopAudio: true,
+    
     vibrate: true,
     volumeSettings: VolumeSettings.fade(
       fadeDuration: const Duration(seconds: 5),
+
     ),
-    notificationSettings: const NotificationSettings(
-      title: 'Task Reminder',
-      body: 'Time to complete your task!',
+    notificationSettings: NotificationSettings(
+      title: ntitle,
+      body: nbody,
+      stopButton: 'Stop', 
+
     ),
   );
 
@@ -226,7 +230,7 @@ void _showAddTaskDialog(BuildContext context) {
                   ));
               });
 
-              await setAlarm(selectedDateTime!);
+              await setAlarm(selectedDateTime!,titleController.text,descController.text);
 
               Navigator.pop(context);
             },
