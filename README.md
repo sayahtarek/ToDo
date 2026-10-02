@@ -29,6 +29,7 @@ flutter run
 - **Extra assets:** `Alarm.mp3` (notification sound)
 
 ## Screenshots
+<img width="401" height="864" alt="scrc" src="https://github.com/user-attachments/assets/ebc2dfce-da59-4ac9-a7b8-a61f4619459f" />
 
 
 ## Author
