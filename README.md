@@ -16,8 +16,8 @@ A simple and practical to-do list app built with Flutter — manage your tasks w
 
 ### Installation
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git](https://github.com/sayahtarek/ToDo.git
-cd your-repo-name
+git clone https://github.com/sayahtarek/ToDo.git
+cd ToDo
 flutter pub get
 flutter run
 ```
