@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-const Color keycolor = Color.fromRGBO(238, 239, 32,1);
+const Color keycolor = Color.fromRGBO(255, 87, 20, 1);
 const Color sidecolor = Color.fromRGBO(191, 210, 0, 1);
+const Color missedcolor =  Color.fromRGBO(241, 68, 0, 1);
 
+bool vibration = true;
 
 bool editing = false;
 List<(String, String,IconData,bool,DateTime?)> tasks = [];
@@ -69,7 +71,15 @@ class MyPageState extends State<MyPage>{
             child: ListTile(
               title: Text(task.$1),
               subtitle: Text("${task.$2} \n ${task.$5}"),
-              
+              onTap: () {
+                  // what happens when tapped
+                  print('Tapped: ${task.$1}');
+                },
+              onLongPress: () {
+                  // what happens on long-press (hold down)
+                  print('Long pressed: ${task.$1}');
+              },
+                
               leading: Icon(task.$3) ,
               trailing: editing ? Checkbox(
                 value:task.$4,
@@ -89,14 +99,9 @@ class MyPageState extends State<MyPage>{
     );
 }
 void deletItems() {
-  for (final task in tasks) {
-    if (task.$4 == true) {
-      setState(() {
-        tasks.remove(task);
-      });
-     
-    }
-  }
+  setState(() {
+    tasks.removeWhere((task) => task.$4 == true);
+  });
 }
 
 Future<void> setAlarm(DateTime dateTime,String ntitle , String nbody) async {
@@ -105,8 +110,8 @@ Future<void> setAlarm(DateTime dateTime,String ntitle , String nbody) async {
     dateTime: dateTime,
     assetAudioPath: 'assets/audios/Alarm.mp3', // add your own sound file
     loopAudio: true,
-    
-    vibrate: true,
+
+    vibrate: vibration,
     volumeSettings: VolumeSettings.fade(
       fadeDuration: const Duration(seconds: 5),
 
@@ -114,13 +119,12 @@ Future<void> setAlarm(DateTime dateTime,String ntitle , String nbody) async {
     notificationSettings: NotificationSettings(
       title: ntitle,
       body: nbody,
-      stopButton: 'Stop', 
 
     ),
+     
   );
 
   final result = await Alarm.set(alarmSettings: alarmSettings);
-  print('Alarm.set() result: $result');
 }
 
 void _showAddTaskDialog(BuildContext context) {
