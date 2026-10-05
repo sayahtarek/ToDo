@@ -5,13 +5,13 @@
 
 
 
+import 'package:ToDo/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
-const Color keycolor = Color.fromRGBO(255, 87, 20, 1);
-const Color sidecolor = Color.fromRGBO(191, 210, 0, 1);
-const Color missedcolor =  Color.fromRGBO(241, 68, 0, 1);
+
 
 bool vibration = true;
 
@@ -47,7 +47,7 @@ class MyPageState extends State<MyPage>{
    @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("To->Do"),
+      appBar: AppBar(title: const Text("To->Do"), 
       backgroundColor: keycolor,
       actions: [
         IconButton(onPressed: (){ setState(() {
@@ -55,7 +55,7 @@ class MyPageState extends State<MyPage>{
         if (editing) 
            IconButton(onPressed: deletItems, icon: const Icon(Icons.delete)),  
         
-        IconButton(onPressed: (){}, icon: const Icon(Icons.settings)),
+        IconButton(onPressed: () => _showAboutDialog(context), icon: const Icon(Icons.settings)),
         
       ],
       ),
@@ -98,6 +98,11 @@ class MyPageState extends State<MyPage>{
       ),
     );
 }
+Future<String> loadLicenseText() async {
+  return await rootBundle.loadString('assets/license.txt');
+}
+
+
 void deletItems() {
   setState(() {
     tasks.removeWhere((task) => task.$4 == true);
@@ -127,6 +132,27 @@ Future<void> setAlarm(DateTime dateTime,String ntitle , String nbody) async {
   final result = await Alarm.set(alarmSettings: alarmSettings);
 }
 
+void _showAboutDialog(BuildContext context) async {
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        
+        content: SingleChildScrollView( 
+          
+          child: Text(licenseText),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
 void _showAddTaskDialog(BuildContext context) {
 
   final titleController = TextEditingController();
